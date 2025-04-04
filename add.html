@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Student</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <style>
+        /* Background image from the browser */
+        body {
+            background: url('https://png.pngtree.com/thumb_back/fh260/background/20231221/pngtree-school-season-student-books-blue-simple-school-season-poster-background-image_15541876.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full screen height */
+            flex-direction: column;
+        }
+
+        /* Form container styling */
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: rgb(213, 19, 109);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back button styling */
+        .back-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #35dc5f;
+            color: rgb(11, 11, 231);
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add Student</h2>
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+        <p th:if="${success}" th:text="${success}" class="success"></p>
+        <form action="/add" method="post" th:object="${student}">
+            <input type="text" th:field="*{name}" placeholder="Name" required><br>
+            <input type="email" th:field="*{email}" placeholder="Email" required><br>
+            <input type="text" th:field="*{mobile}" placeholder="Mobile" required><br>
+            <input type="text" th:field="*{studentClass}" placeholder="Class" required><br>
+            <button type="submit">Add Student</button>
+        </form>
+        <a href="/" class="back-button">Back to List</a>
+    </div>
+
+</body>
+</html>  

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Background image for edit page */
+        body {
+            background: url('https://png.pngtree.com/58pic/32/72/77/38P58PICPCDHyiQm1Cqc7_PIC2018.jpg') 
+                no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(4, 228, 56, 0.863);
+            position: relative;
+        }
+
+        /* Success Message */
+        .alert-success {
+            display: none;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Update Button */
+        .btn-primary {
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back to List Button */
+        .btn-back {
+            width: 100%;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .btn-back:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Success and Error Message -->
+        <div id="successMessage" class="alert alert-success" role="alert" th:if="${successMessage}">
+            Student details updated successfully!
+        </div>
+        <div id="errorMessage" class="alert alert-danger" role="alert" th:if="${errorMessage}">
+            Error occurred during update. Please try again.
+        </div>
+
+        <h2 class="text-center">Edit Student</h2>
+        <form th:action="@{/update}" method="post" th:object="${student}">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" class="form-control" th:field="*{email}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile:</label>
+                <input type="text" id="mobile" class="form-control" th:field="*{mobile}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="studentClass">Class:</label>
+                <input type="text" id="studentClass" class="form-control" th:field="*{studentClass}" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
+        <div class="text-center">
+            <a href="/" class="btn-back">Back to List</a>
+        </div>
+    </div>
+
+    <script>
+        function showPopup(event) {
+            event.preventDefault(); // Stop form from submitting immediately
+
+            let successMessage = document.getElementById("successMessage");
+            let errorMessage = document.getElementById("errorMessage");
+
+            if (successMessage) {
+                successMessage.style.display = "block"; // Show success message
+                setTimeout(function () {
+                    successMessage.style.display = "none";
+                    document.querySelector("form").submit();
+                }, 3000);
+            }
+
+            if (errorMessage) {
+                errorMessage.style.display = "block"; // Show error message
+                setTimeout(function () {
+                    errorMessage.style.display = "none";
+                    document.querySelector("form").submit();
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

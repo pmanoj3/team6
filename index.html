@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>School Management System</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <style>
+        /* Background Styling */
+        .index-page {
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20241209/pngtree-management-in-the-education-system-concept-a-colorful-background-with-stack-image_16758694.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        /* Page Header Styling */
+        .page-header {
+            text-align: center;
+            padding: 20px;
+            background-color: #004080;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #004080;
+            color: white;
+        }
+
+        /* Buttons */
+        .add-button, .edit-button, .delete-button {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+        .add-button {
+            background-color: green;
+        }
+        .edit-button {
+            background-color: rgb(10, 163, 235);
+        }
+        .delete-button {
+            background-color: rgb(22, 175, 231);
+        }
+        
+        /* Search Form */
+        .search-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-form input {
+            padding: 8px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-form button {
+            padding: 8px 15px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="index-page">
+
+    <!-- Page Header -->
+    <header class="page-header">
+        School Management System
+    </header>
+
+    <div class="container">
+        <h2>Student List</h2>
+
+        <!-- Success & Error Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}" th:remove="all"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}" th:remove="all"></div>
+        
+        <!-- Search Form -->
+        <form method="GET" action="/" class="search-form">
+            <input type="text" name="search" placeholder="Search by name, email, or class"/>
+            <button type="submit">Search</button>
+        </form>
+        
+        <a href="/add" class="add-button">Add New Student</a>
+        
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Class</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.mobile}"></td>
+                <td th:text="${student.studentClass}"></td>
+                <td>
+                    <a th:href="@{/edit/{id}(id=${student.id})}" class="edit-button" onclick="return confirm('Are you sure to edit?')">Edit</a>
+                    <a th:href="@{/delete/{id}(id=${student.id})}" class="delete-button" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.display = 'none';
+            });
+        }, 3000); // Message disappears after 3 seconds
+    </script>
+</body>
+</html>
